@@ -1,13 +1,14 @@
 package usecase
 
 import (
+	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/models"
 	users "github.com/team2/real_api/app/modules/users/repositories"
-	"github.com/gofiber/fiber/v2"
 )
 
 type UseCase interface {
 	UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error)
+	SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, error)
 }
 
 type UserUseCase struct {

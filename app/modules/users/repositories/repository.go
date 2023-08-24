@@ -7,6 +7,7 @@ import (
 
 type UserRepoInterface interface {
 	GetUserProfile(userID int) (*models.User, error)
+	CreateUser(data *models.SignUpInput) (*models.User, error)
 }
 
 type UserRepo struct {
