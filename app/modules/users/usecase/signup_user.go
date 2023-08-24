@@ -3,23 +3,23 @@ package usecase
 import (
 	"fmt"
 	"net/http"
-
+	"errors"
 	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/auth"
 	"github.com/team2/real_api/app/models"
 )
 
 func (u UserUseCase) SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, error) {
-	// if payload.Password != payload.PasswordConfirmation {
-	// 	return nil, errors.New("passwords do not match")
-	// }
+	if payload.Password != payload.PasswordConfirmation {
+		return nil, errors.New("passwords do not match")
+	}
 
 	// check existing email
-	// existing := u.userRepo.CheckEmailExisting(payload.Email)
+	existing := u.userRepo.CheckEmailExists(payload.Email)
 
-	// if existing == true {
-	// 	return nil, errors.New("email existing, please choose another email.")
-	// }
+	if existing == true {
+		return nil, errors.New("email existing, please choose another email.")
+	}
 
 	createdUser, err := u.userRepo.CreateUser(payload)
 
