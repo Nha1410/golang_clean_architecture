@@ -10,11 +10,11 @@ func (h *UserHandlers) UserProfile() fiber.Handler {
 		users, err := h.userUseCase.UserProfile(ctx)
 
 		if err != nil {
-			ctx.Status(http.StatusInternalServerError)
-			return ctx.JSON(&fiber.Map{"status": http.StatusInternalServerError, "error": err.Error()})
+			ctx.Status(http.StatusUnauthorized)
+			return ctx.JSON(&fiber.Map{"status": http.StatusUnauthorized, "error": err.Error()})
 		}
 
 		ctx.Status(http.StatusOK)
-		return ctx.JSON(&fiber.Map{"status": http.StatusOK, "data": users, "error": nil})
+		return ctx.JSON(&fiber.Map{"status": http.StatusOK, "data": users})
 	}
 }
