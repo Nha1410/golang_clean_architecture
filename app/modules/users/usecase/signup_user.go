@@ -1,7 +1,11 @@
 package usecase
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/gofiber/fiber/v2"
+	"github.com/team2/real_api/app/auth"
 	"github.com/team2/real_api/app/models"
 )
 
@@ -23,5 +27,13 @@ func (u UserUseCase) SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*m
 		return nil, err
 	}
 
-	return models.ResponseToken(createdUser), nil
+	token, err := auth.GenerateToken(int(createdUser.ID))
+	fmt.Println(token)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError)
+	}
+ 
+
+	return models.ResponseToken(token), nil
 }

@@ -26,11 +26,6 @@ type UserResponse struct {
 }
 
 type SignUpResponse struct { 
-	ID        uint   `json:"id,omitempty"`
-	FirstName string `json:"first_name" gorm:"type:varchar(100);not null"`
-	LastName  string `json:"last_name" gorm:"type:varchar(100);not null"`
-	Email     string `json:"email" gorm:"type:varchar(100);uniqueIndex;not null"`
-	Phone     string `json:"phone" gorm:"type:varchar(100)"`
 	Token     string `json:"token" gorm:"type:varchar(100)"`
 }
 
@@ -45,14 +40,9 @@ func FilterUserRecord(user *User) *UserResponse {
 }
 
 
-func ResponseToken(user *User) *SignUpResponse {
+func ResponseToken(token string) *SignUpResponse {
 	return &SignUpResponse{ 
-		ID:        user.ID,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Email:     user.Email,
-		Phone:     user.Phone,
-		Token:     "token",
+		Token:     token,
 	}
 }
 
