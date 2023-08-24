@@ -15,5 +15,5 @@ func SetupRoutes(server *Server) {
 	api := server.Fiber.Group("/api/v1")
 
 	user := api.Group("/users")
-	user.Get("/profile", userHandler.ListUser())
+	user.Get("/profile", userHandler.UserProfile())
 }

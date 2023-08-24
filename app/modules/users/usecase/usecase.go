@@ -7,7 +7,7 @@ import (
 )
 
 type UseCase interface {
-	ListUser(ctx *fiber.Ctx) ([]*models.UserResponse, error)
+	UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error)
 }
 
 type UserUseCase struct {

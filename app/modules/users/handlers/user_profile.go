@@ -5,9 +5,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h *UserHandlers) ListUser() fiber.Handler {
+func (h *UserHandlers) UserProfile() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		users, err := h.userUseCase.ListUser(ctx)
+		users, err := h.userUseCase.UserProfile(ctx)
 
 		if err != nil {
 			ctx.Status(http.StatusInternalServerError)

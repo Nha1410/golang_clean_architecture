@@ -6,7 +6,7 @@ import (
 )
 
 type UserRepoInterface interface {
-	ListUser() ([]*models.User, error)
+	GetUserProfile(userID int) (*models.User, error)
 }
 
 type UserRepo struct {
