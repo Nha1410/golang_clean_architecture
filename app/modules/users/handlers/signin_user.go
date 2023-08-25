@@ -37,6 +37,5 @@ func (h *UserHandlers) SignInUser() fiber.Handler {
 		return ctx.JSON(fiber.Map{
 			"token": token,
 		})
-
 	}
 }
