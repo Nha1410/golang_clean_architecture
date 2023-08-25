@@ -7,6 +7,9 @@ import (
 
 type UserRepoInterface interface {
 	GetUserProfile(userID int) (*models.User, error)
+	CreateUser(data *models.SignUpInput) (*models.User, error)
+	CheckEmailExists(email string) (bool)
+	FindUserByEmail(email string) (*models.User, error)
 }
 
 type UserRepo struct {

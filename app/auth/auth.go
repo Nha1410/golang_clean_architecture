@@ -3,16 +3,16 @@ package auth
 import (
 	"time"
 	"os"
+	"errors"
 	"github.com/dgrijalva/jwt-go"
 )
 
 var jwtKey = []byte(os.Getenv("JWT_SECRET_KEY"))
 
 func GenerateToken(userID int) (string, error) {
-	// Create a new claims structure
 	claims := jwt.MapClaims{
 		"user_id": userID,
-		"exp":     time.Now().Add(time.Hour * 24).Unix(), // Token expires in 1 day
+		"exp":     time.Now().Add(time.Hour * 24).Unix(),
 	}
 
 	// Create the JWT token
@@ -36,6 +36,16 @@ func VerifyToken(tokenString string) (int, error) {
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
 		return 0, err
+	}
+
+	expirationTime, expOk := claims["exp"].(float64)
+	if !expOk {
+		return 0, errors.New("Token does not contain valid expiration time")
+	}
+
+	expUnix := int64(expirationTime)
+	if time.Now().Unix() > expUnix {
+		return 0, errors.New("Token has expired")
 	}
 
 	userID := int(claims["user_id"].(float64))
