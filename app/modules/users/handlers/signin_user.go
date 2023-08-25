@@ -18,14 +18,11 @@ func (h *UserHandlers) SignInUser() fiber.Handler {
 		errorMessages, validationErr := h.userUseCase.ValidateFields(&payload)
 		if validationErr != nil {
 			ctx.Status(http.StatusUnprocessableEntity)
-			errorsArray := []fiber.Map{}
-			for field, message := range errorMessages {
-				errorsArray = append(errorsArray, fiber.Map{field: message})
-			}
+
 			return ctx.JSON(&fiber.Map{
 				"code": http.StatusUnprocessableEntity,
 				"message": "Unprocessable Content",
-				"errors": errorsArray,
+				"errors": errorMessages,
 			})
 		}
 
