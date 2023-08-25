@@ -36,6 +36,6 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 		}
 
 		ctx.Status(http.StatusCreated)
-		return ctx.JSON(&fiber.Map{"status": http.StatusCreated, "data": createdUser, "error": nil})
+		return ctx.JSON(createdUser)
 	}
 }

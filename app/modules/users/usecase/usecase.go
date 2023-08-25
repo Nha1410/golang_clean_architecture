@@ -10,7 +10,7 @@ type UseCase interface {
 	UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error)
 	SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, error)
 	ValidateFields(payload *models.SignUpInput) (map[string]string, error)
-	Authenticate(email, password string) (string, error)	
+	SignInUser(email, password string) (string, error)	
 }
 
 type UserUseCase struct {

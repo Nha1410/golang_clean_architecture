@@ -18,7 +18,7 @@ func (h *UserHandlers) SignInUser() fiber.Handler {
 		}
 
 		fmt.Println(payload.Email)
-		token, err := h.userUseCase.Authenticate(payload.Email , payload.Password)
+		token, err := h.userUseCase.SignInUser(payload.Email , payload.Password)
 
 		if err != nil {
 			return err

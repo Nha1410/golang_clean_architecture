@@ -6,17 +6,13 @@ import (
 )
 
 
-func (u UserUseCase) Authenticate(email, password string) (string, error) { 
-	
+func (u UserUseCase) SignInUser(email, password string) (string, error) { 
 	user , err := u.userRepo.FindUserByEmail(email)
-
 	if err != nil { 
 		return "", err
 	}
 
 	// Verify the password
-
-
 	if err := bcrypt.CompareHashAndPassword([]byte((user.Password)), []byte(password)); err != nil {
 		return "", err
 	}
