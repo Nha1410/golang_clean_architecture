@@ -54,3 +54,8 @@ type SignUpInput struct {
 	Password             string `json:"password" validate:"required,min=8"`
 	PasswordConfirmation string `json:"password_confirmation" validate:"required,min=8"`
 }
+
+type SignInInput struct {
+	Email string `json:"email" validate:"required"`
+	Password string `json:"password" validate:"required"`
+}

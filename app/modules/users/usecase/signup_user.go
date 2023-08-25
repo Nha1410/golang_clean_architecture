@@ -1,9 +1,10 @@
 package usecase
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
-	"errors"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/auth"
 	"github.com/team2/real_api/app/models"
@@ -18,7 +19,7 @@ func (u UserUseCase) SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*m
 	existing := u.userRepo.CheckEmailExists(payload.Email)
 
 	if existing == true {
-		return nil, errors.New("email existing, please choose another email.")
+		return nil, errors.New("email existing, please choose another email")
 	}
 
 	createdUser, err := u.userRepo.CreateUser(payload)

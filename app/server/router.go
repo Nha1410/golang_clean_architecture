@@ -17,4 +17,5 @@ func SetupRoutes(server *Server) {
 	user := api.Group("/user")
 	user.Get("/profile", userHandler.UserProfile())
 	user.Post("/signup", userHandler.SignUpUser())
+	user.Post("/signin", userHandler.SignInUser())
 }
