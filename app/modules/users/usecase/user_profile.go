@@ -9,7 +9,7 @@ import (
 	"github.com/team2/real_api/app/models"
 )
 
-func (u *UserUseCase) UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error) {
+func (u UserUseCase) UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error) {
 	tokenString := strings.TrimPrefix(ctx.Get("Authorization"), "Bearer ")
 	if tokenString == "" {
 		return nil, errors.New("unauthorized request")

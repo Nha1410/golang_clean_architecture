@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/models"
-	"github.com/go-playground/validator/v10"
 )
 
 func (h *UserHandlers) SignUpUser() fiber.Handler {
@@ -15,22 +14,18 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 			return ctx.JSON(&fiber.Map{"status": http.StatusBadRequest, "error": err.Error()})
 		}
 
-		// Validate the payload using go-validator
-		validate := validator.New()
-		if err := validate.Struct(payload); err != nil {
+		// Use ValidateFields to validate the payload
+		errorMessages, validationErr := h.userUseCase.ValidateFields(&payload)
+		if validationErr != nil {
 			ctx.Status(http.StatusUnprocessableEntity)
-
-			// Custom error response format
-			errors := []map[string]interface{}{}
-			for _, err := range err.(validator.ValidationErrors) {
-				errors = append(errors, map[string]interface{}{
-					err.Field(): err.Error(),
-				})
+			errorsArray := []fiber.Map{}
+			for field, message := range errorMessages {
+				errorsArray = append(errorsArray, fiber.Map{field: message})
 			}
 			return ctx.JSON(&fiber.Map{
-				"code":    http.StatusUnprocessableEntity,
+				"code": http.StatusUnprocessableEntity,
 				"message": "Unprocessable Content",
-				"errors":  errors,
+				"errors": errorsArray,
 			})
 		}
 
