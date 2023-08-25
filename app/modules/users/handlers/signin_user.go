@@ -21,18 +21,20 @@ func (h *UserHandlers) SignInUser() fiber.Handler {
 
 			return ctx.JSON(&fiber.Map{
 				"code": http.StatusUnprocessableEntity,
-				"message": "Unprocessable Content",
+				"message": "Invalid input",
 				"errors": errorMessages,
 			})
 		}
 
 		token, err := h.userUseCase.SignInUser(payload.Email , payload.Password)
 		if err != nil {
-			return err
+			ctx.Status(http.StatusUnauthorized)
+			return ctx.JSON(&fiber.Map{"status": http.StatusUnauthorized, "error": err.Error()})
 		}
 	
 		return ctx.JSON(fiber.Map{
 			"token": token,
+			"code": http.StatusOK,
 		})
 	}
 }
