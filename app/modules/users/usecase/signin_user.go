@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"errors"
-	"github.com/team2/real_api/app/auth"
+	"github.com/team2/real_api/app/modules/auth"
 	"golang.org/x/crypto/bcrypt"
 )
 

@@ -8,7 +8,7 @@ import (
 
 type UseCase interface {
 	UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error)
-	SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, error)
+	SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, map[string]string)
 	ValidateFields(payload interface{}) ([]map[string]string, error)
 	SignInUser(email, password string) (string, error)	
 }

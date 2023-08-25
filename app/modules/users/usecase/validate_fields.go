@@ -12,7 +12,6 @@ func (u UserUseCase) ValidateFields(payload interface{}) ([]map[string]string, e
 		for _, fieldError := range err.(validator.ValidationErrors) {
 			fieldName := fieldError.Field()
 			errorMessage := ""
-
 			switch fieldError.Tag() {
 			case "required":
 				errorMessage = fieldName + " is required"

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/team2/real_api/app/auth"
+	"github.com/team2/real_api/app/modules/auth"
 	"github.com/team2/real_api/app/models"
 )
 

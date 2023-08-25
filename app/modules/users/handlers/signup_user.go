@@ -11,10 +11,9 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 		payload := models.SignUpInput{}
 		if err := ctx.BodyParser(&payload); err != nil {
 			ctx.Status(http.StatusBadRequest)
-			return ctx.JSON(&fiber.Map{"status": http.StatusBadRequest, "error": err.Error()})
+			return ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
 		}
 
-		// Use ValidateFields to validate the payload
 		errorMessages, validationErr := h.userUseCase.ValidateFields(&payload)
 		if validationErr != nil {
 			ctx.Status(http.StatusUnprocessableEntity)
@@ -26,10 +25,14 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 			})
 		}
 
-		createdUser, err := h.userUseCase.SignUpUser(ctx, &payload)
-		if err != nil {
-			ctx.Status(http.StatusBadRequest)
-			return ctx.JSON(&fiber.Map{"status": http.StatusBadRequest, "error": err.Error()})
+		createdUser, errors := h.userUseCase.SignUpUser(ctx, &payload)
+		if errors != nil {
+			ctx.Status(http.StatusUnprocessableEntity)
+			return ctx.JSON(&fiber.Map{
+				"code": http.StatusUnprocessableEntity,
+				"message": "Unprocessable Content",
+				"error": errors,
+			})
 		}
 
 		ctx.Status(http.StatusCreated)
