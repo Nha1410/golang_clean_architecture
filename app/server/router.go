@@ -12,7 +12,7 @@ func SetupRoutes(server *Server) {
 	userUseCase := userUseCase.NewUserUseCase(userRepo)
 	userHandler := handlerUser.NewUserHandlers(userUseCase)
 
-	api := server.Fiber.Group("/api/v1")
+	api := server.Fiber.Group("/api/v1", VerifyToken())
 
 	user := api.Group("/user")
 	user.Get("/profile", userHandler.UserProfile())
