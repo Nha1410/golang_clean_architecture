@@ -6,11 +6,13 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName string `gorm:"type:varchar(255)" json:"first_name"`
-	LastName  string `gorm:"type:varchar(255)" json:"last_name"`
-	Email     string `gorm:"type:varchar(255)" json:"email"`
-	Password  string `gorm:"type:varchar(255)" json:"password"`
-	Phone     string `gorm:"type:varchar(255)" json:"phone"`
+	FirstName      string         `gorm:"type:varchar(255)" json:"first_name"`
+	LastName       string         `gorm:"type:varchar(255)" json:"last_name"`
+	Email          string         `gorm:"type:varchar(255)" json:"email"`
+	Password       string         `gorm:"type:varchar(255)" json:"password"`
+	Phone          string         `gorm:"type:varchar(255)" json:"phone"`
+	BookCategories []BookCategory
+	Books          []Book
 }
 
 func (User) TableName() string {
