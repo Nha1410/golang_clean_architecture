@@ -1,4 +1,4 @@
-package usecase
+package validate
 
 import (
 	"reflect"
@@ -6,7 +6,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func (u UserUseCase) ValidateFields(payload interface{}) ([]map[string]string, error) {
+func ValidateFields(payload interface{}) ([]map[string]string, error) {
 	validate := validator.New()
 	err := validate.Struct(payload)
 	if err != nil {
