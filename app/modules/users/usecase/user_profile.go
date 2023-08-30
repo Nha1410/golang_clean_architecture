@@ -11,7 +11,7 @@ func (u UserUseCase) UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error) {
 	userProfile, err := u.userRepo.GetUserProfile(userID)
 
 	if err != nil {
-		return nil, errors.New("unauthorized request")
+		return nil, errors.New("User profile not found!")
 	}
 
 	return models.FilterUserRecord(userProfile), nil
