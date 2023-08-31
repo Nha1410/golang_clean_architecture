@@ -11,7 +11,7 @@ func (u BookUseCase) EditBook(ctx *fiber.Ctx, bookID int, payload *models.BookIn
 		return nil, map[string]string{"error": err.Error()}
 	}
 
-	updatedBook, updateErr := u.bookRepo.UpdateBook(book, payload)
+	updatedBook, updateErr := u.bookRepo.UpdateBook(ctx, book, payload)
 	if updateErr != nil {
 		return nil, map[string]string{"error": updateErr.Error()}
 	}

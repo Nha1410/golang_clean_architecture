@@ -27,7 +27,7 @@ func (Book) TableName() string {
 
 type BookInput struct {
 	Name           string `json:"name" validate:"required"`
-	Image          string `json:"image" validate:"required"`
+	Image          string `json:"image"`
 	Author         string `json:"author" validate:"required"`
 	PublicDate     string `json:"public_date" validate:"required"`
 	Description    string `json:"description" validate:"required"`

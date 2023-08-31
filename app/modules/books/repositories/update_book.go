@@ -2,11 +2,13 @@ package repository
 
 import (
 	"github.com/team2/real_api/app/models"
+	"github.com/gofiber/fiber/v2"
 	"time"
 	"errors"
+	"fmt"
 )
 
-func (r BookRepo) UpdateBook(book *models.Book, payload *models.BookInput) (*models.Book, error) {
+func (r BookRepo) UpdateBook(ctx *fiber.Ctx,book *models.Book, payload *models.BookInput) (*models.Book, error) {
 	var user models.User
 	var category models.BookCategory
 	err := r.DB.First(&user, payload.UserID).Error
@@ -17,9 +19,17 @@ func (r BookRepo) UpdateBook(book *models.Book, payload *models.BookInput) (*mod
 	if err != nil {
 			return nil, errors.New("book_category_id is not valid")
 	}
+	
+	file, errGetFile := ctx.FormFile("image")
+	if errGetFile == nil {
+		errSaveFile := ctx.SaveFile(file, fmt.Sprintf("./assets/image/%s", file.Filename))
+		if errSaveFile != nil {
+			return nil, errSaveFile
+		}
+		book.Image = fmt.Sprintf("./assets/image/%s", file.Filename)
+	}
 
 	book.Name = payload.Name
-	book.Image = payload.Image
 	book.Author = payload.Author
 	parsedTime, err := time.Parse("01/02/2006", payload.PublicDate)
 	if err != nil {

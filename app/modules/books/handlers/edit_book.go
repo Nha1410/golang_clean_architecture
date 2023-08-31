@@ -18,10 +18,23 @@ func (h *BookHandlers) EditBook() fiber.Handler {
 			})
 		}
 
-		payload := models.BookInput{}
-		if err := ctx.BodyParser(&payload); err != nil {
-			ctx.Status(http.StatusBadRequest)
-			return ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
+		BookCategoryID, err :=  strconv.Atoi(ctx.FormValue("book_category_id"))
+		if err != nil {
+			ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
+		}
+
+		UserID, err :=  strconv.Atoi(ctx.FormValue("user_id"))
+		if err != nil {
+			ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
+		}
+	
+		payload := models.BookInput{
+			Name: ctx.FormValue("name"),
+			Author: ctx.FormValue("author"),
+			PublicDate: ctx.FormValue("public_date"),
+			Description: ctx.FormValue("description"),
+			BookCategoryID: uint(BookCategoryID),
+			UserID: uint(UserID),
 		}
 
 		errorMessages, validationErr := validate.ValidateFields(&payload)

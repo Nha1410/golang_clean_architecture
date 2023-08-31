@@ -6,7 +6,7 @@ import (
 )
 
 func (u BookUseCase) AddBook(ctx *fiber.Ctx, payload *models.BookInput) (*models.BookResponse, map[string]string) {
-	createdBook, err := u.bookRepo.CreateBook(payload)
+	createdBook, err := u.bookRepo.CreateBook(ctx, payload)
 
 	if err != nil {
 		return nil, map[string]string{"error": err.Error()}
