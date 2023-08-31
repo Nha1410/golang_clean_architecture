@@ -3,7 +3,9 @@ package server
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/modules/auth"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"strings"
+	"net/http"
 )
 
 func VerifyToken() fiber.Handler {
@@ -38,4 +40,12 @@ func VerifyToken() fiber.Handler {
 
 		return ctx.Next()
 	}
+}
+
+func ConfigureStaticFileMiddleware(app *fiber.App) {
+	fs := filesystem.New(filesystem.Config{
+    Root:  http.Dir("./assets/image"),
+  })
+
+	app.Use(fs)
 }

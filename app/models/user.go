@@ -11,8 +11,8 @@ type User struct {
 	Email          string         `gorm:"type:varchar(255)" json:"email"`
 	Password       string         `gorm:"type:varchar(255)" json:"password"`
 	Phone          string         `gorm:"type:varchar(255)" json:"phone"`
-	BookCategories []BookCategory
-	Books          []Book
+	BookCategories []BookCategory `gorm:"constraint:OnDelete:CASCADE"`
+	Books          []Book					`gorm:"constraint:OnDelete:CASCADE"`
 }
 
 func (User) TableName() string {
