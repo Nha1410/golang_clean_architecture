@@ -41,6 +41,10 @@ func SetupRoutes(server *Server) {
 	bookCategoryUseCase := useCaseBookCategory.NewBookCategoryUseCase(bookCategoryRepo)
 	bookCategoryHandler := handlerbookCategory.NewBookCategoryHandlers(bookCategoryUseCase)
 
-	bookCategory := api.Group("/book-category") 
+	bookCategory := api.Group("/book_categories") 
 	bookCategory.Get("/", bookCategoryHandler.GetList())
+	bookCategory.Get("/:id", bookCategoryHandler.GetByID())
+	bookCategory.Delete("/:id", bookCategoryHandler.DeleteBookCategory())
+	bookCategory.Post("/new", bookCategoryHandler.CreateBookCategory())
+	bookCategory.Put("/:id/edit", bookCategoryHandler.UpdateBookCategory())
 }

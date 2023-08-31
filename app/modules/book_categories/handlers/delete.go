@@ -6,17 +6,17 @@ import (
 	"strconv"
 )
 
-func (h *BookHandlers) DeleteBook() fiber.Handler {
+func (h *BookCategoryHandlers) DeleteBookCategory() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		bookID, err :=  strconv.Atoi(ctx.Params("id"))
+		categoryID, err :=  strconv.Atoi(ctx.Params("id"))
 		if err != nil {
 			return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"code": http.StatusBadRequest,
-				"message": "Invalid book ID",
+				"message": "Invalid Book Category ID",
 			})
 		}
 
-		errDelete := h.bookUseCase.DeleteBook(ctx, bookID)
+		errDelete := h.BookCategoryUseCase.DeleteBookCategory(ctx, categoryID)
 
 		if errDelete != nil {
 			ctx.Status(http.StatusNotFound)
@@ -24,6 +24,6 @@ func (h *BookHandlers) DeleteBook() fiber.Handler {
 		}
 
 		ctx.Status(http.StatusOK)
-		return ctx.JSON(&fiber.Map{"code": http.StatusOK, "message": "Delete book successfully"})
+		return ctx.JSON(&fiber.Map{"code": http.StatusOK, "message": "Delete book category successfully"})
 	}
 }

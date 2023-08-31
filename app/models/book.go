@@ -62,3 +62,11 @@ func FilterBookRecord(book *Book) *BookResponse {
 	}
 }
 
+func FilterListBookRecord(books []Book) []*BookResponse {
+	var bookResponses []*BookResponse
+	for _, book := range books {
+		bookResponses = append(bookResponses, FilterBookRecord(&book))
+	}
+	return bookResponses
+}
+

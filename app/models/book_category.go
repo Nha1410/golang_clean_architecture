@@ -9,13 +9,19 @@ type BookCategory struct {
 	Name        string `gorm:"type:varchar(255)" json:"name"`
 	Image       string `json:"image"`
 	Description string `json:"description"`
-	UserID      uint   `json:"user_id"`
+	UserID      int   `json:"user_id"`
 	User        User
 	Books       []Book
 }
 
 func (BookCategory) TableName() string {
 	return "book_categories"
+}
+
+type BookCategoryInput struct {
+	Name           string `json:"name" validate:"required"`
+	Image          string `json:"image"`
+	Description    string `json:"description" validate:"required"`
 }
 
 type BookCategoryInfoResponse struct {
@@ -31,5 +37,27 @@ func FilterBookCategoryInfoRecord(bookCategory *BookCategory) *BookCategoryInfoR
 		Name: bookCategory.Name,
 		Image: bookCategory.Image,
 		Description: bookCategory.Description,
+	}
+}
+
+type BookCategoryResponse struct {
+	ID          	uint 						 `json:"id"`
+	Name        	string 					 `gorm:"type:varchar(255)" json:"name"`
+	Image       	string 					 `json:"image"`
+	Description 	string  		     `json:"description"`
+	Books     		[]*BookResponse  `json:"books"`
+	UserID      	int					 		 `json:"user_id"`
+	User  				*UserResponse 	 `json:"user"`
+}
+
+func FilterBookCategoryRecord(bookCategory *BookCategory) *BookCategoryResponse {
+	return &BookCategoryResponse{
+		ID: 				 bookCategory.ID,
+		Name: 			 bookCategory.Name,
+		Image: 			 bookCategory.Image,
+		Description: bookCategory.Description,
+		Books:			 FilterListBookRecord(bookCategory.Books),
+		UserID: 		 bookCategory.UserID,
+		User: 			 FilterUserRecord(&bookCategory.User),
 	}
 }

@@ -3,14 +3,15 @@ package repository
 import (
 	"github.com/team2/real_api/app/models"
 	"gorm.io/gorm"
+	"github.com/gofiber/fiber/v2"
 )
 
 type BookCategoryRepoInterface interface {
-	GetList() ([]models.BookCategory, error)
-	GetByID(id uint) (*models.BookCategory, error)
-	Create(bookCategory *models.BookCategory) (*models.BookCategory, error)
-	Update(bookCategory *models.BookCategory) (*models.BookCategory, error)
-	Delete(id uint) error
+	GetList() ([]*models.BookCategory, error)
+	GetByID(id int) (*models.BookCategory, error)
+	CreateBookCategory(ctx *fiber.Ctx, payload *models.BookCategoryInput) (*models.BookCategory, error)
+	UpdateBookCategory(ctx *fiber.Ctx,bookCategory *models.BookCategory, payload *models.BookCategoryInput) (*models.BookCategory, error)
+	DeleteBookCategory(bookCategory *models.BookCategory) error
 }
 
 type BookCategoryRepo struct {

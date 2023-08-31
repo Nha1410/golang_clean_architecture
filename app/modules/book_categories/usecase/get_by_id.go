@@ -1,7 +1,16 @@
 package usecase
 
-import "github.com/team2/real_api/app/models"
+import (
+	"errors"
+	"github.com/team2/real_api/app/models"
+)
 
-func (u BookCategoryUseCase) GetBookCategoryByID(id uint) (*models.BookCategory, error) {
-	return nil, nil
+func (u BookCategoryUseCase) GetBookCategoryByID(id int) (*models.BookCategoryResponse, error) {
+	info, err := u.bookCategoryRepo.GetByID(id)
+
+	if err != nil {
+		return nil, errors.New("Book Categpry not found!")
+	}
+
+	return models.FilterBookCategoryRecord(info), nil
 }
