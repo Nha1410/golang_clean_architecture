@@ -11,9 +11,10 @@ import (
 )
 
 func (r BookRepo) CreateBook(ctx *fiber.Ctx, payload *models.BookInput) (*models.Book, error) {
-	user, err := userRepo.NewUserRepo(r.DB).GetUserProfile(int(payload.UserID))
+	userID := ctx.Locals("userID").(int)
+	user, err := userRepo.NewUserRepo(r.DB).GetUserProfile(userID)
 	if err != nil {
-			return nil, errors.New("user_id is not valid")
+			return nil, errors.New("User is not valid")
 	}
 
 	var category models.BookCategory
@@ -33,7 +34,7 @@ func (r BookRepo) CreateBook(ctx *fiber.Ctx, payload *models.BookInput) (*models
 		PublicDate: parsedTime,
 		Description: payload.Description,
 		BookCategoryID: payload.BookCategoryID,
-		UserID: payload.UserID,
+		UserID: userID,
 	}
 
 	file, errGetFile := ctx.FormFile("image")

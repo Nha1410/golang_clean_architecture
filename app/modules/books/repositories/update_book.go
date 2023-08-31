@@ -10,9 +10,10 @@ import (
 )
 
 func (r BookRepo) UpdateBook(ctx *fiber.Ctx,book *models.Book, payload *models.BookInput) (*models.Book, error) {
-	user, err := userRepo.NewUserRepo(r.DB).GetUserProfile(int(payload.UserID))
+	userID := ctx.Locals("userID").(int)
+	user, err := userRepo.NewUserRepo(r.DB).GetUserProfile(userID)
 	if err != nil {
-			return nil, errors.New("user_id is not valid")
+			return nil, errors.New("User is not valid")
 	}
 	
 	var category models.BookCategory
@@ -40,7 +41,7 @@ func (r BookRepo) UpdateBook(ctx *fiber.Ctx,book *models.Book, payload *models.B
 	book.PublicDate = parsedTime
 	book.Description = payload.Description
 	book.BookCategoryID = payload.BookCategoryID
-	book.UserID = payload.UserID
+	book.UserID = userID
 
 	result := r.DB.Table(models.Book{}.TableName()).Save(&book)
 	if result.Error != nil {

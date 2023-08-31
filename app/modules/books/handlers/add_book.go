@@ -14,19 +14,13 @@ func (h *BookHandlers) AddBook() fiber.Handler {
 		if err != nil {
 			ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
 		}
-
-		UserID, err :=  strconv.Atoi(ctx.FormValue("user_id"))
-		if err != nil {
-			ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
-		}
 	
 		payload := models.BookInput{
 			Name: ctx.FormValue("name"),
 			Author: ctx.FormValue("author"),
 			PublicDate: ctx.FormValue("public_date"),
 			Description: ctx.FormValue("description"),
-			BookCategoryID: uint(BookCategoryID),
-			UserID: uint(UserID),
+			BookCategoryID: BookCategoryID,
 		}
 
 		errorMessages, validationErr := validate.ValidateFields(&payload)
