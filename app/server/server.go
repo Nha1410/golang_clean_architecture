@@ -30,7 +30,7 @@ func (server *Server) Start() error {
 		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
 	}))
 
-	ConfigureStaticFileMiddleware(server.Fiber)
+	server.Fiber.Static("/images", "./assets/image")
 	SetupRoutes(server)
 	return server.Fiber.Listen(":" + server.Config.HTTP.Port)
 }

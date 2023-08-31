@@ -2,46 +2,48 @@ package repository
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/models"
+	"github.com/team2/real_api/config"
+	userRepo "github.com/team2/real_api/app/modules/users/repositories"
 )
 
-func (r BookRepo) CreateBook(ctx *fiber.Ctx, data *models.BookInput) (*models.Book, error) {
-	var user models.User
-	var category models.BookCategory
-	err := r.DB.First(&user, data.UserID).Error
+func (r BookRepo) CreateBook(ctx *fiber.Ctx, payload *models.BookInput) (*models.Book, error) {
+	user, err := userRepo.NewUserRepo(r.DB).GetUserProfile(int(payload.UserID))
 	if err != nil {
 			return nil, errors.New("user_id is not valid")
 	}
-	err = r.DB.First(&category, data.BookCategoryID).Error
+
+	var category models.BookCategory
+	err = r.DB.First(&category, payload.BookCategoryID).Error
 	if err != nil {
 			return nil, errors.New("book_category_id is not valid")
 	}
 
-	parsedTime, err := time.Parse("01/02/2006", data.PublicDate)
+	parsedTime, err := time.Parse("01/02/2006", payload.PublicDate)
   if err != nil {
     return nil, errors.New("Please provide a valid date with format: mm/dd/yyyy")
   }
 
 	var book = &models.Book{
-		Name:  data.Name,
-		Author: data.Author,
+		Name:  payload.Name,
+		Author: payload.Author,
 		PublicDate: parsedTime,
-		Description: data.Description,
-		BookCategoryID: data.BookCategoryID,
-		UserID: data.UserID,
+		Description: payload.Description,
+		BookCategoryID: payload.BookCategoryID,
+		UserID: payload.UserID,
 	}
 
 	file, errGetFile := ctx.FormFile("image")
 	if errGetFile == nil {
-		errSaveFile := ctx.SaveFile(file, fmt.Sprintf("./assets/image/%s", file.Filename))
+		conf := config.LoadConfig()
+		errSaveFile := ctx.SaveFile(file, conf.HTTP.AssetsFolder + file.Filename)
 		if errSaveFile != nil {
 			return nil, errSaveFile
 		}
-		book.Image = fmt.Sprintf("./assets/image/%s", file.Filename)
+		book.Image = conf.HTTP.ImagePath + file.Filename
 	}
 
 	result := r.DB.Table(models.Book{}.TableName()).Create(&book)
@@ -49,7 +51,7 @@ func (r BookRepo) CreateBook(ctx *fiber.Ctx, data *models.BookInput) (*models.Bo
 		return nil, result.Error
 	}
 
-	book.User = user
+	book.User = *user
 	book.BookCategory = category
 
 	return book, nil
