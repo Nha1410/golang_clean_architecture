@@ -45,7 +45,7 @@ type BookCategoryResponse struct {
 	Name        	string 					 `gorm:"type:varchar(255)" json:"name"`
 	Image       	string 					 `json:"image"`
 	Description 	string  		     `json:"description"`
-	Books     		[]*BookResponse  `json:"books"`
+	Books     		[]*onlyBookResponse  `json:"books"`
 	UserID      	int					 		 `json:"user_id"`
 	User  				*UserResponse 	 `json:"user"`
 }
@@ -56,7 +56,7 @@ func FilterBookCategoryRecord(bookCategory *BookCategory) *BookCategoryResponse 
 		Name: 			 bookCategory.Name,
 		Image: 			 bookCategory.Image,
 		Description: bookCategory.Description,
-		Books:			 FilterListBookRecord(bookCategory.Books),
+		Books:			 FilterListBookOnlyRecord(bookCategory.Books),
 		UserID: 		 bookCategory.UserID,
 		User: 			 FilterUserRecord(&bookCategory.User),
 	}

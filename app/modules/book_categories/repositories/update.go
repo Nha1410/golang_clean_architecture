@@ -8,7 +8,7 @@ import (
 	userRepo "github.com/team2/real_api/app/modules/users/repositories"
 )
 
-func (r BookCategoryRepo) UpdateBookCategory(ctx *fiber.Ctx,bookCategory *models.BookCategory, payload *models.BookCategoryInput) (*models.BookCategory, error) {
+func (r BookCategoryRepo) UpdateBookCategory(ctx *fiber.Ctx, bookCategory *models.BookCategory, payload *models.BookCategoryInput) (*models.BookCategory, error) {
 	userID := ctx.Locals("userID").(int)
 	user, err := userRepo.NewUserRepo(r.DB).GetUserProfile(userID)
 	if err != nil {

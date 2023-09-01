@@ -9,7 +9,7 @@ func (u BookCategoryUseCase) GetBookCategoryByID(id int) (*models.BookCategoryRe
 	info, err := u.bookCategoryRepo.GetByID(id)
 
 	if err != nil {
-		return nil, errors.New("Book Categpry not found!")
+		return nil, errors.New("Book Category not found!")
 	}
 
 	return models.FilterBookCategoryRecord(info), nil

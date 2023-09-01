@@ -8,6 +8,6 @@ type BookCategoryHandlers struct {
 	BookCategoryUseCase bookCategory.UseCase
 }
 
-func NewBookCategoryHandlers(BookCategory bookCategory.UseCase) *BookCategoryHandlers { 
-	return &BookCategoryHandlers{BookCategoryUseCase: bookCategory.BookCategoryUseCase{}}
+func NewBookCategoryHandlers(bookCategoryUseCase bookCategory.UseCase) *BookCategoryHandlers { 
+	return &BookCategoryHandlers{BookCategoryUseCase: bookCategoryUseCase}
 }
