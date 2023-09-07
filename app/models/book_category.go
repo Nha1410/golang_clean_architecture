@@ -11,7 +11,7 @@ type BookCategory struct {
 	Description string `json:"description"`
 	UserID      int   `json:"user_id"`
 	User        User
-	Books       []Book
+	Books       []Book `gorm:"foreignKey:BookCategoryID"`
 }
 
 func (BookCategory) TableName() string {

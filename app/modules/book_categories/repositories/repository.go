@@ -1,9 +1,9 @@
 package repository
 
 import (
+	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/models"
 	"gorm.io/gorm"
-	"github.com/gofiber/fiber/v2"
 )
 
 type BookCategoryRepoInterface interface {

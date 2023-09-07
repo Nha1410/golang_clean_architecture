@@ -10,6 +10,7 @@ type UserRepoInterface interface {
 	CreateUser(data *models.SignUpInput) (*models.User, error)
 	CheckEmailExists(email string) (bool)
 	FindUserByEmail(email string) (*models.User, error)
+	DeleteUser(user *models.User) error
 }
 
 type UserRepo struct {

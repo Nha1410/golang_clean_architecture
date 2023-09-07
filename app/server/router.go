@@ -25,6 +25,7 @@ func SetupRoutes(server *Server) {
 	user.Get("/profile", userHandler.UserProfile())
 	user.Post("/signup", userHandler.SignUpUser())
 	user.Post("/signin", userHandler.SignInUser())
+	user.Delete("/:id", userHandler.DeleteUser())
 
 	bookRepo := repositoryBook.NewBookRepo(server.DB)
 	bookUseCase := bookUseCase.NewBookUseCase(bookRepo)
