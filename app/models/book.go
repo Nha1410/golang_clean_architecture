@@ -13,10 +13,10 @@ type Book struct {
 	PublicDate  		time.Time 		`json:"public_date"`
 	Description 		string    		`json:"description"`
 
-	BookCategoryID  int					`json:"book_category_id"`
+	BookCategoryID  int						`json:"book_category_id"`
 	BookCategory 		BookCategory
 
-	UserID      		int					`json:"user_id"`
+	UserID      		int						`json:"user_id"`
 	User 						User
 
 }

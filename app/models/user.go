@@ -12,7 +12,7 @@ type User struct {
 	Password       string         `gorm:"type:varchar(255)" json:"password"`
 	Phone          string         `gorm:"type:varchar(255)" json:"phone"`
 	BookCategories []BookCategory `gorm:"foreignKey:UserID"`
-	Books          []Book		  `gorm:"foreignKey:UserID"`
+	Books          []Book		  		`gorm:"foreignKey:UserID"`
 }
 
 func (User) TableName() string {

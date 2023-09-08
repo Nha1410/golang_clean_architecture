@@ -6,12 +6,12 @@ import (
 
 type BookCategory struct {
 	gorm.Model
-	Name        string `gorm:"type:varchar(255)" json:"name"`
-	Image       string `json:"image"`
-	Description string `json:"description"`
-	UserID      int   `json:"user_id"`
+	Name        string	`gorm:"type:varchar(255)" json:"name"`
+	Image       string	`json:"image"`
+	Description string	`json:"description"`
+	UserID      int			`json:"user_id"`
 	User        User
-	Books       []Book `gorm:"foreignKey:BookCategoryID"`
+	Books       []Book	`gorm:"foreignKey:BookCategoryID"`
 }
 
 func (BookCategory) TableName() string {
@@ -48,6 +48,7 @@ type BookCategoryResponse struct {
 	Books     		[]*onlyBookResponse  `json:"books"`
 	UserID      	int					 		 `json:"user_id"`
 	User  				*UserResponse 	 `json:"user"`
+	DeletedAt     gorm.DeletedAt
 }
 
 func FilterBookCategoryRecord(bookCategory *BookCategory) *BookCategoryResponse {

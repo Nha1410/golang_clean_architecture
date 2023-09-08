@@ -16,7 +16,7 @@ func (r BookCategoryRepo) UpdateBookCategory(ctx *fiber.Ctx, bookCategory *model
 	}
 
 	if userID != bookCategory.UserID {
-		return nil, errors.New("Unauthorized to delete book category")
+		return nil, errors.New("Unauthorized to update book category")
 	}
 	
 	file, errGetFile := ctx.FormFile("image")
