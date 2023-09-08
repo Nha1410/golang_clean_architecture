@@ -11,7 +11,7 @@ type BookRepoInterface interface {
 	UpdateBook(ctx *fiber.Ctx, book *models.Book, payload *models.BookInput) (*models.Book, error)
 	GetBookByID(bookID int) (*models.Book, error)
 	GetBooks() ([]*models.Book, error)
-	DeleteBook(bookID int) error
+	DeleteBook(book *models.Book) error
 }
 
 type BookRepo struct {

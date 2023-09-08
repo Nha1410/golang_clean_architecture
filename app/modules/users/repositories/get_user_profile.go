@@ -7,7 +7,7 @@ import (
 func (r UserRepo) GetUserProfile(userID int) (*models.User, error) {
 	var user *models.User
 
-	result := r.DB.Table(models.User{}.TableName()).Where("id = ?", userID).First(&user)
+	result := r.DB.Table(models.User{}.TableName()).Preload("Books").Preload("BookCategories").Where("id = ?", userID).First(&user)
 
 	if result.Error != nil {
 		return nil, result.Error

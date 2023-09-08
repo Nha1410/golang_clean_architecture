@@ -2,21 +2,23 @@ package handlers
 
 import (
 	"net/http"
-	"github.com/gofiber/fiber/v2"
 	"strconv"
+
+	"github.com/gofiber/fiber/v2"
 )
 
-func (h *BookHandlers) DeleteBook() fiber.Handler {
+func (h *UserHandlers) DeleteUser() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		bookID, err :=  strconv.Atoi(ctx.Params("id"))
+		userID, err :=  strconv.Atoi(ctx.Params("id"))
+
 		if err != nil {
 			return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"code": http.StatusBadRequest,
-				"message": "Invalid book ID",
+				"message": "Invalid user ID",
 			})
 		}
 
-		errDelete := h.bookUseCase.DeleteBook(ctx, bookID)
+		errDelete := h.userUseCase.DeleteUser(ctx, userID)
 
 		if errDelete != nil {
 			ctx.Status(http.StatusNotFound)
@@ -24,6 +26,6 @@ func (h *BookHandlers) DeleteBook() fiber.Handler {
 		}
 
 		ctx.Status(http.StatusOK)
-		return ctx.JSON(&fiber.Map{"code": http.StatusOK, "message": "Delete book successfully"})
+		return ctx.JSON(&fiber.Map{"code": http.StatusOK, "message": "Delete user successfully"})
 	}
 }

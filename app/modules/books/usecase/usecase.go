@@ -11,7 +11,7 @@ type UseCase interface {
 	EditBook(ctx *fiber.Ctx, bookID int, payload *models.BookInput) (*models.BookResponse, map[string]string)
 	GetBook(bookID int) (*models.BookResponse, error)
 	GetBooks() ([]*models.BookResponse, error)
-	DeleteBook(bookID int) error
+	DeleteBook(ctx *fiber.Ctx, bookID int) error
 }
 
 type BookUseCase struct {
