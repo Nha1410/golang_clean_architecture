@@ -17,9 +17,14 @@ type HTTPConfig struct {
 	ExposePort string
 }
 
+type SecretConfig struct { 
+	JwtKey string
+}
+
 type Config struct {
 	DB   DBConfig
 	HTTP HTTPConfig
+	SECRET SecretConfig
 }
 
 func LoadConfig() *Config {
@@ -36,6 +41,9 @@ func LoadConfig() *Config {
 			Host:       os.Getenv("APP_HOST"),
 			Port:       os.Getenv("APP_PORT"),
 			ExposePort: os.Getenv("EXPOSE_PORT"),
+		},
+		SECRET: SecretConfig{ 
+			JwtKey: os.Getenv("JWT_SECRET_KEY"),
 		},
 	}
 }

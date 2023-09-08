@@ -11,7 +11,7 @@ func (h *UserHandlers) UserProfile() fiber.Handler {
 
 		if err != nil {
 			ctx.Status(http.StatusUnauthorized)
-			return ctx.JSON(&fiber.Map{"code": http.StatusUnauthorized, "message": err.Error()})
+			return ctx.JSON(&fiber.Map{"code": http.StatusNotFound, "message": err.Error()})
 		}
 
 		ctx.Status(http.StatusOK)

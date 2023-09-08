@@ -1,13 +1,23 @@
 package auth
 
 import (
-	"time"
-	"os"
 	"errors"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
+	"github.com/team2/real_api/config"
 )
 
-var jwtKey = []byte(os.Getenv("JWT_SECRET_KEY"))
+func SetupJwtKey() []byte {
+	conf := config.LoadConfig()
+	return []byte(conf.SECRET.JwtKey)
+}
+
+var jwtKey []byte
+
+func init() {
+	jwtKey = SetupJwtKey()
+}
 
 func GenerateToken(userID int) (string, error) {
 	claims := jwt.MapClaims{
