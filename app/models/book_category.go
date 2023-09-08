@@ -48,7 +48,6 @@ type BookCategoryResponse struct {
 	Books     		[]*onlyBookResponse  `json:"books"`
 	UserID      	int					 		 `json:"user_id"`
 	User  				*UserResponse 	 `json:"user"`
-	DeletedAt     gorm.DeletedAt
 }
 
 func FilterBookCategoryRecord(bookCategory *BookCategory) *BookCategoryResponse {
