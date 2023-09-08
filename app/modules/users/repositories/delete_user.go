@@ -1,26 +1,10 @@
 package repository
 
 import (
-	"fmt"
-
 	"github.com/team2/real_api/app/models"
 )
 
-func(r UserRepo) DeleteUser(user *models.User) error { 
-	booksAssociation := r.DB.Model(&user).Association("Books")
-	books := []*models.Book{}
-
-	if err := booksAssociation.Find(&books); err != nil {
-		// Xử lý lỗi
-		fmt.Println("Lỗi khi truy vấn danh sách sách:", err)
-		return nil
-	}
-
-	fmt.Println("Danh sách sách của người dùng:")
-	for _, book := range books {
-		fmt.Printf("ID: %d, Tên: %s\n", book.ID, book.Name)
-	}
-
+func(r UserRepo) DeleteUser(user *models.User) error {
 	if err := r.DB.Model(&user).Association("Books").Delete(user.Books); err != nil {
 		return err
 	}
@@ -34,5 +18,4 @@ func(r UserRepo) DeleteUser(user *models.User) error {
 	}
 
 	return nil
-
 }
