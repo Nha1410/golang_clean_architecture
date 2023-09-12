@@ -22,7 +22,7 @@ func (h *UserHandlers) DeleteUser() fiber.Handler {
 
 		if errDelete != nil {
 			ctx.Status(http.StatusNotFound)
-			return ctx.JSON(&fiber.Map{"code": http.StatusNotFound, "message": err.Error()})
+			return ctx.JSON(&fiber.Map{"code": http.StatusNotFound, "message": "Delete user failed", "errors": errDelete.Error()})
 		}
 
 		ctx.Status(http.StatusOK)
