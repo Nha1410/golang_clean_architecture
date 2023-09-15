@@ -47,7 +47,7 @@ type BookResponse struct {
 	User  					 *UserResponse 						 `json:"user"`
 }
 
-type onlyBookResponse struct {
+type OnlyBookResponse struct {
 	ID               uint 										`json:"id"`
 	Name        		 string 									`gorm:"type:varchar(255)" json:"name"`
 	Image       		 string 									`json:"image"`
@@ -79,8 +79,8 @@ func FilterListBookRecord(books []Book) []*BookResponse {
 	return bookResponses
 }
 
-func FilterOnlyBookRecord(book *Book) *onlyBookResponse {
-	return &onlyBookResponse{
+func FilterOnlyBookRecord(book *Book) *OnlyBookResponse {
+	return &OnlyBookResponse{
 		ID:        			book.ID,
 		Name: 					book.Name,
 		Image: 					book.Image,
@@ -90,8 +90,8 @@ func FilterOnlyBookRecord(book *Book) *onlyBookResponse {
 	}
 }
 
-func FilterListBookOnlyRecord(books []Book) []*onlyBookResponse {
-	var bookResponses []*onlyBookResponse
+func FilterListBookOnlyRecord(books []Book) []*OnlyBookResponse {
+	var bookResponses []*OnlyBookResponse
 	for _, book := range books {
 		bookResponses = append(bookResponses, FilterOnlyBookRecord(&book))
 	}

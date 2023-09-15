@@ -45,7 +45,7 @@ type BookCategoryResponse struct {
 	Name        	string 					 `gorm:"type:varchar(255)" json:"name"`
 	Image       	string 					 `json:"image"`
 	Description 	string  		     `json:"description"`
-	Books     		[]*onlyBookResponse  `json:"books"`
+	Books     		[]*OnlyBookResponse  `json:"books"`
 	UserID      	int					 		 `json:"user_id"`
 	User  				*UserResponse 	 `json:"user"`
 }

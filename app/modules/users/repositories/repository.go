@@ -6,6 +6,7 @@ import (
 )
 
 type UserRepoInterface interface {
+	GetBooks(userID int) ([]models.Book, error)
 	GetUserProfile(userID int) (*models.User, error)
 	CreateUser(data *models.SignUpInput) (*models.User, error)
 	CheckEmailExists(email string) (bool)

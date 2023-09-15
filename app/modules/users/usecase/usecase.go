@@ -7,6 +7,7 @@ import (
 )
 
 type UseCase interface {
+	GetBooks(ctx *fiber.Ctx) ([]*models.OnlyBookResponse, error)
 	UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error)
 	SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, map[string]string)
 	SignInUser(email, password string) (string, error)	
