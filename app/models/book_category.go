@@ -49,6 +49,12 @@ type BookCategoryResponse struct {
 	UserID      	int					 		 `json:"user_id"`
 	User  				*UserResponse 	 `json:"user"`
 }
+type OnlyBookCategoryResponse struct {
+	ID          	uint 				`json:"id"`
+	Name        	string 				`gorm:"type:varchar(255)" json:"name"`
+	Image       	string 				`json:"image"`
+	Description 	string  		    `json:"description"`
+}
 
 func FilterBookCategoryRecord(bookCategory *BookCategory) *BookCategoryResponse {
 	return &BookCategoryResponse{
@@ -60,4 +66,22 @@ func FilterBookCategoryRecord(bookCategory *BookCategory) *BookCategoryResponse 
 		UserID: 		 bookCategory.UserID,
 		User: 			 FilterUserRecord(&bookCategory.User),
 	}
+}
+
+func FilterOnlyBookCategoryRecord(bookCategory *BookCategory) *OnlyBookCategoryResponse {
+	return &OnlyBookCategoryResponse{
+		ID:        			bookCategory.ID,
+		Name: 					bookCategory.Name,
+		Image: 					bookCategory.Image,
+		Description: 		bookCategory.Description,
+	}
+}
+
+
+func FilterListBookCategoryOnlyRecord(bookCategoies []BookCategory) []*OnlyBookCategoryResponse  {
+	var bookCategoryResponses []*OnlyBookCategoryResponse
+	for _, bookCategory := range bookCategoies {
+		bookCategoryResponses = append(bookCategoryResponses, FilterOnlyBookCategoryRecord(&bookCategory))
+	}
+	return bookCategoryResponses
 }

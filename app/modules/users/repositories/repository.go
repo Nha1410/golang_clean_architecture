@@ -12,6 +12,7 @@ type UserRepoInterface interface {
 	CheckEmailExists(email string) (bool)
 	FindUserByEmail(email string) (*models.User, error)
 	DeleteUser(user *models.User) error
+	GetBookCategories(userID int) ([]models.BookCategory, error) 
 }
 
 type UserRepo struct {

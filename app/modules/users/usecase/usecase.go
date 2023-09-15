@@ -12,6 +12,7 @@ type UseCase interface {
 	SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, map[string]string)
 	SignInUser(email, password string) (string, error)	
 	DeleteUser(ctx *fiber.Ctx, userID int) error
+	GetBookCategories(ctx *fiber.Ctx) ([]*models.OnlyBookCategoryResponse, error)
 }
 
 type UserUseCase struct {
