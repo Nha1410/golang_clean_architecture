@@ -7,10 +7,12 @@ import (
 )
 
 type UseCase interface {
+	GetBooks(ctx *fiber.Ctx) ([]*models.OnlyBookResponse, error)
 	UserProfile(ctx *fiber.Ctx) (*models.UserResponse, error)
 	SignUpUser(ctx *fiber.Ctx, payload *models.SignUpInput) (*models.SignUpResponse, map[string]string)
-	ValidateFields(payload interface{}) ([]map[string]string, error)
 	SignInUser(email, password string) (string, error)	
+	DeleteUser(ctx *fiber.Ctx, userID int) error
+	GetBookCategories(ctx *fiber.Ctx) ([]*models.OnlyBookCategoryResponse, error)
 }
 
 type UserUseCase struct {

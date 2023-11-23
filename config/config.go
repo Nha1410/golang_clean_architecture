@@ -15,6 +15,8 @@ type HTTPConfig struct {
 	Host       string
 	Port       string
 	ExposePort string
+	ImagePath  string
+	AssetsFolder string
 }
 
 type SecretConfig struct { 
@@ -41,6 +43,8 @@ func LoadConfig() *Config {
 			Host:       os.Getenv("APP_HOST"),
 			Port:       os.Getenv("APP_PORT"),
 			ExposePort: os.Getenv("EXPOSE_PORT"),
+			ImagePath: os.Getenv("APP_IMAGE_PATH"),
+			AssetsFolder: os.Getenv("APP_ASSETS_FOLDER"),
 		},
 		SECRET: SecretConfig{ 
 			JwtKey: os.Getenv("JWT_SECRET_KEY"),

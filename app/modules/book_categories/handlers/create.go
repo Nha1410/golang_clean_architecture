@@ -7,12 +7,11 @@ import (
 	validate "github.com/team2/real_api/app/modules/validate"
 )
 
-func (h *UserHandlers) SignUpUser() fiber.Handler {
+func (h *BookCategoryHandlers) CreateBookCategory() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		payload := models.SignUpInput{}
-		if err := ctx.BodyParser(&payload); err != nil {
-			ctx.Status(http.StatusBadRequest)
-			return ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
+		payload := models.BookCategoryInput{
+			Name: ctx.FormValue("name"),
+			Description: ctx.FormValue("description"),
 		}
 
 		errorMessages, validationErr := validate.ValidateFields(&payload)
@@ -26,7 +25,7 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 			})
 		}
 
-		createdUser, errors := h.userUseCase.SignUpUser(ctx, &payload)
+		createdBook, errors := h.BookCategoryUseCase.CreateBookCategory(ctx, &payload)
 		if errors != nil {
 			ctx.Status(http.StatusUnprocessableEntity)
 			return ctx.JSON(&fiber.Map{
@@ -37,6 +36,6 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 		}
 
 		ctx.Status(http.StatusCreated)
-		return ctx.JSON(createdUser)
+		return ctx.JSON(createdBook)
 	}
 }

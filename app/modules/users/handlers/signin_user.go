@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/models"
+	validate "github.com/team2/real_api/app/modules/validate"
 )
 
 func (h *UserHandlers) SignInUser() fiber.Handler {
@@ -15,7 +16,7 @@ func (h *UserHandlers) SignInUser() fiber.Handler {
 			return ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
 		}
 
-		_, validationErr := h.userUseCase.ValidateFields(&payload)
+		_, validationErr := validate.ValidateFields(&payload)
 		if validationErr != nil {
 			ctx.Status(http.StatusUnprocessableEntity)
 

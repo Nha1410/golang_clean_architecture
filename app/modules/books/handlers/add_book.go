@@ -5,14 +5,22 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/team2/real_api/app/models"
 	validate "github.com/team2/real_api/app/modules/validate"
+	"strconv"
 )
 
-func (h *UserHandlers) SignUpUser() fiber.Handler {
+func (h *BookHandlers) AddBook() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		payload := models.SignUpInput{}
-		if err := ctx.BodyParser(&payload); err != nil {
-			ctx.Status(http.StatusBadRequest)
-			return ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
+		BookCategoryID, err :=  strconv.Atoi(ctx.FormValue("book_category_id"))
+		if err != nil {
+			ctx.JSON(&fiber.Map{"code": http.StatusBadRequest, "message": err.Error()})
+		}
+	
+		payload := models.BookInput{
+			Name: ctx.FormValue("name"),
+			Author: ctx.FormValue("author"),
+			PublicDate: ctx.FormValue("public_date"),
+			Description: ctx.FormValue("description"),
+			BookCategoryID: BookCategoryID,
 		}
 
 		errorMessages, validationErr := validate.ValidateFields(&payload)
@@ -26,7 +34,7 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 			})
 		}
 
-		createdUser, errors := h.userUseCase.SignUpUser(ctx, &payload)
+		createdBook, errors := h.bookUseCase.AddBook(ctx, &payload)
 		if errors != nil {
 			ctx.Status(http.StatusUnprocessableEntity)
 			return ctx.JSON(&fiber.Map{
@@ -37,6 +45,6 @@ func (h *UserHandlers) SignUpUser() fiber.Handler {
 		}
 
 		ctx.Status(http.StatusCreated)
-		return ctx.JSON(createdUser)
+		return ctx.JSON(createdBook)
 	}
 }
